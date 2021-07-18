@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Düzenle Kayıt Tablosu</title>
+</head>
+<body>
+<div align="center" >
+<h1>Düzenle Kayıt Tablosu</h1>
+<br>
+
+<form action="#" th:action="@{/save}" th:object="${urunler}" method="post">
+<table border="0" cellpadding="10">
+<tr>
+<td>ÜRÜN_ID:</td>
+<td><input type="text" th:field="*{id}" readonly="readonly"/></td>
+</tr>
+<tr>
+<td>YENİ ÜRÜN:</td>
+<td><input type="text" th:field="*{ad}"/></td>
+</tr>
+
+<tr>
+<td>MARKA:</td>
+<td ><input type="text" th:field="*{marka}"/> </td>
+</tr>
+
+<tr>
+<td>Üretim_Yeri:</td>
+<td ><input type="text" th:field="*{uretim_yeri}" /> </td>
+</tr>
+<tr>
+<td>FİYAT</td>
+<td ><input type="text" th:field="*{fiyat}"/></td>
+</tr>
+<tr> 
+<td  colspan="2" ><button type="submit">KAYDET</button></td>
+</tr>
+
+</table>
+</form>
+</div>
+</body>
+</html>
