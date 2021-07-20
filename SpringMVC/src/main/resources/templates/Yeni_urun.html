@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Yeni Kayıt Tablosu</title>
+</head>
+<body>
+<div align="center">
+<p th:inline="text">Hoşgeldiniz [[${#httpServletRequest.remoteUser}]]</p>
+<div align="center" >
+<h1>Yeni Kayıt Tablosu</h1>
+<br>
+
+<form action="#" th:action="@{/save}" th:object="${yeni_urun}" method="post">
+<table border="0" cellpadding="10">
+<tr>
+<td>YENİ ÜRÜN:</td>
+<td><input type="text" th:field="*{ad}"/></td>
+</tr>
+
+<tr>
+<td>MARKA:</td>
+<td ><input type="text" th:field="*{marka}"/> </td>
+</tr>
+
+<tr>
+<td>Üretim_Yeri:</td>
+<td ><input type="text" th:field="*{uretim_yeri}" /> </td>
+</tr>
+<tr>
+<td>FİYAT</td>
+<td ><input type="text" th:field="*{fiyat}"/></td>
+</tr>
+<tr> 
+<td  colspan="2" ><button type="submit">KAYDET</button></td>
+</tr>
+
+</table>
+</form>
+</div>
+</body>
+</html>

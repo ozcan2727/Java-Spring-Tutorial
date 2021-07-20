@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<title>Ürünler</title>
+</head>
+<body>
+
+<div align="center">
+<div>
+<p th:inline="text">Hoşgeldiniz [[${#httpServletRequest.remoteUser}]]</p>
+</div>
+<div>
+<form th:action="@{/logout}" method="post">
+<input type="submit" value="Çıkış" />
+</form>
+</div>
+<div>
+<h1>Ürünler Tablosu</h1>
+<br>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+<a href="yeni" >Yeni Tablo oluştur</a>
+<br><br>
+</div>
+
+</div>
+<div>&nbsp;</div>
+<div>
+<form th:action="@{/page/1}">
+<input type="hidden" name="sortA" th:value="${sortA}" />
+<input type="hidden" name="sortD" th:value="${sortD}" />
+   Arama:
+    <input type="text" name="key"  required="required" />
+    &nbsp;
+    <input type="submit" value="Gönder" />
+    &nbsp;
+    <input type="submit" value="Temizle" onclick="SİL()"/>
+</form>
+</div>
+
+<div>&nbsp;</div>
+
+<div>
+
+<table border="1">
+<thead>
+<tr>
+<th>
+<a th:href="@{'/page/' + ${gecerliSayfa} + '?sortA=id&sortD=' + ${TersSortD}}" >Ürünler_ID</a>
+
+</th>
+<th>
+<a th:href="@{'/page/' + ${gecerliSayfa} + '?sortA=ad&sortD=' + ${TersSortD}}" >AD</a>
+</th>
+<th>
+<a th:href="@{'/page/' + ${gecerliSayfa} + '?sortA=marka&sortD=' + ${TersSortD}}">MARKA</a>
+</th>
+
+<th>
+<a th:href="@{'/page/' + ${gecerliSayfa} + '?sortA=uretim_yeri&sortD=' + ${TersSortD}}">
+ ÜRETİMYERİ 
+ 
+ </a>
+</th>
+<th>
+<a th:href="@{'/page/' + ${gecerliSayfa} + '?sortA=fiyat&sortD=' + ${TersSortD}}">
+FİYAT
+</a>
+</th>
+<th sec:authorize="hasRole('ROLE_ADMIN')">Actions</th>
+</tr>
+</thead>
+<tbody>
+<tr th:each="Urun : ${urunler}" >
+<td th:text="${Urun.id}">Ürünler_ID</td>
+<td th:text="${Urun.ad}">AD</td>
+<td th:text="${Urun.marka}">MARKA</td>
+<td th:text="${Urun.uretim_yeri}">ÜRETİMYERİ</td>
+<td th:text="${Urun.fiyat}">FİYAT</td>
+<td sec:authorize="hasRole('ROLE_ADMIN')"> 
+ <a th:href="@{'/edit/'+ ${Urun.id}}" >Düzenle</a>
+ &nbsp;&nbsp;&nbsp;&nbsp;
+ <a th:href="@{'/delete/'+ ${Urun.id}}" >Delete</a>
+</td>
+</tr>
+
+</tbody>
+</table>
+
+</div>
+<div>&nbsp;</div>
+<div>
+   Toplam Öğeler:[[${ToplamOgeler}]] - Sayfa [[${gecerliSayfa}]] toplam [[${toplamPage}]]
+   &nbsp; - &nbsp;
+   
+   <a th:if="${gecerliSayfa > 1}" th:href="@{'/page/1?sortA=' + ${sortA} + '&sortD=' + ${sortD}}">Önceki</a>
+   <span th:unless="${gecerliSayfa > 1}">Önceki</span>
+    &nbsp; - &nbsp;
+    
+  <a th:if="${gecerliSayfa > 1}" th:href="@{'/page/' + ${gecerliSayfa - 1} + '?sortA=' + ${sortA} + '&sortD=' + ${sortD}}">BaşaDön</a> 
+   <span th:unless="${gecerliSayfa > 1}">BaşaDön</span>
+   &nbsp; - &nbsp;
+   
+   <span th:each="i: ${#numbers.sequence(1, toplamPage)}" >
+   <a th:if="${i !=gecerliSayfa}" th:href="@{'/page/' + ${i}} + '?sortA=' + ${sortA} + '&sortD=' + ${sortD}">[[${i}]]</a> 
+    <span th:unless="${i!=gecerliSayfa}">[[${i}]]</span>
+  
+   &nbsp;&nbsp;
+  
+   </span> 
+   <a th:if="${gecerliSayfa < toplamPage}" th:href="@{'/page/' + ${gecerliSayfa + 1} + '?sortA='+ ${sortA} + '&sortD=' + ${sortD}}">Sonraki</a>
+   <span  th:unless="${gecerliSayfa < toplamPage}" >Sonraki</span>
+  
+   &nbsp;&nbsp;
+  
+   <a th:if="${gecerliSayfa<toplamPage}" th:href="@{'/page/' + ${toplamPage} + '?sortA=' + ${sortA} + '&sortD=' + ${sortD}}">Son</a>
+   <span  th:unless="${gecerliSayfa < toplamPage}" >Son</span>
+   
+</div>
+</div>
+<script type="text/javascript">
+function SİL(){
+	window.location='/';
+}
+</script>
+</body>
+</html>
